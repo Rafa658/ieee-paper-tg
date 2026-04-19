@@ -4,7 +4,7 @@ all: paper
 
 paper:
 	@echo "Compilando o paper.pdf..."
-	@cd paper && latexmk -pdf -jobname=paper ojits-template.tex
+	@cd paper && latexmk -pdf -jobname=paper paper.tex
 
 clean:
 	@echo "Limpando arquivos auxiliares..."
