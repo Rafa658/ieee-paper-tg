@@ -1,0 +1,22 @@
+\section{DATA PREPARATION AND HANDLING}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{images/odin-etl-simplified.png}
+    \caption{Simplified schematics for the stack used in this work.}
+    \label{fig:odin-etl-simplified}
+\end{figure}
+
+The data for this paper were organized with possible scalability in mind. The source of the dataset is the Operational Data Integrator (ODIN) PostgreSQL database maintained by Brazilian Airspace Control Institute (ICEA); the records collected range from January 1 to December 31, 2025. Extraction was performed using Python scripts that produced Parquet files optimized for analytical workloads and stored locally. Subsequent data transformation employed DuckDB as the query engine, with transformations orchestrated through data build tool (dbt). The resulting datasets were again exported as Parquet files for downstream analysis in Python. The stack used for this work is schematized on Figure \ref{fig:odin-etl-simplified}.
+
+\subsection{FEATURE ENGINEERING}
+
+To enhance the analytical value of the flight data, a series of feature engineering transformations were applied using DuckDB and subsequently documented through dbt. We focused on creating features that better represented flight behavior and operational context. Primarily, we worked with the $kpi08$ (representing key performance indicator, additional flight time) and $transit\_tma$ (time to arrival prediction after entering Terminal Maneuvering Area) fields. 
+
+We incorporated external data sources, like weather information obtained from Iowa State University public API. By adding variables representing visibility and ceiling (extracted from the meteorological data), we aimed to assess the impact of weather conditions on flight times and arrival predictions.  This intersection of flight data and weather data was crucial in uncovering relationships between operational factors and external conditions.
+
+Other transformations included extracting day of week, month and hour of departure for the flights, estimating transit in Terminal Maneuvering Area (TMA) for given moment taking the average $transit\_tma$ for the flights that landed the hour prior of it and multiplying the time elapsed for flights at given flight level for their average fuel consumption per second, as extracted from BADA efficiency chart.
+
+Finally, we calculated the difference between the actual fuel consumption for given flight and the 20th percentile of fuel consumption for similar flights (i.e., the same set of airport of departure, aircraft type and drwy) to create the $kpi16$ feature, offering a measure for the aimed metric for this study.
+
+These transformations – converting epoch timestamps to minutes, creating hourly aggregates, and incorporating weather data – were carefully designed to expose underlying trends and correlations within the flight data, paving the way for more sophisticated analytical investigations.
