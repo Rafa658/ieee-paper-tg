@@ -47,3 +47,43 @@ The variables can be classified into four main categories based on their purpose
 \end{itemize}
 
 The target variable of this study, $kpi16$, represents the additional fuel consumption relative to an efficiency baseline (20th percentile of similar flights). Positive $kpi16$ values indicate consumption above the expected level, while negative values point to operations more efficient than the baseline. The distribution of $kpi16$ presents elongated tails, indicating the presence of observations with significantly high additional consumption. Such cases are typically associated with adverse operational conditions, such as airspace congestion, unfavorable weather, or prolonged holding procedures. Outlier analysis was handled conservatively, maintaining observations between the 1st and 99th percentiles to preserve extreme events that represent actual operational behavior within the system.
+
+\subsection{Additional Fuel Consumption by Departure Airport}
+The departure airport (ADEP) plays a critical role in shaping the flight profile, cruise altitude, and approach procedure into the destination TMA. Figure \ref{fig:adep-kpi16} highlights the average additional fuel consumption (KPI16) for the 15 most frequent ADEPs. Notably, flights originating from Afonso Pena International Airport (SBCT) in Curitiba and Hercílio Luz International Airport (SBFL) in Florianópolis present the highest average penalties. This similarity indicates shared approach challenges, likely due to their geographical alignment and consequent entry routing into the Guarulhos TMA.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/adep_kpi16.png}
+    \caption{Average additional fuel consumption (KPI16) by Departure Airport (ADEP).}
+    \label{fig:adep-kpi16}
+\end{figure}
+
+\subsection{Impact of TMA Entry Sector on Efficiency}
+To further investigate the geographical bottlenecks, the TMA was divided into entry sectors of 60-degree increments based on the aircraft's bearing upon crossing the terminal cylinder (excluding sector 120.0 due to insufficient sample size). As demonstrated in Figure \ref{fig:setor-kpi16}, flights entering through Sector 180.0 and Sector 300.0 demand the highest additional fuel consumption. This disparity suggests that approaches originating from these specific angular windows are structurally less efficient or more prone to Air Traffic Control (ATC) holding patterns and vectoring.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/setor_kpi16.png}
+    \caption{Mean KPI16 (Additional Consumption) distributed by TMA Entry Sector.}
+    \label{fig:setor-kpi16}
+\end{figure}
+
+\subsection{Interaction Between Entry Sectors and Origin Airports}
+A more granular analysis combining both origin airports and entry sectors reveals the operational dynamics causing the aforementioned inefficiencies. Figure \ref{fig:setor-adep-kpi16} details the most frequent ADEPs for the most penalizing sectors. Sector 180.0 is predominantly saturated by flights from Southern capitals (Florianópolis, Porto Alegre, and Curitiba), while Sector 300.0 handles traffic from Goiânia, Uberlândia, and Manaus. The high additional consumption in these sectors highlights that flights arriving from these origins are frequently deprioritized or subjected to complex sequencing maneuvers due to concentrated traffic convergence.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/setor_adep_kpi16.png}
+    \caption{Top ADEPs contributing to high KPI16, grouped by TMA Entry Sector.}
+    \label{fig:setor-adep-kpi16}
+\end{figure}
+
+\subsection{Hourly Traffic Variations and Congestion Cascading}
+Air traffic operates in waves, and the time of arrival heavily dictates the level of congestion encountered. Figure \ref{fig:hora-adep} groups the performance of the three most impactful ADEPs across the six busiest hours of the day. During these peak periods, Curitiba (SBCT) and Porto Alegre (SBPA) frequently alternate as the primary contributors to high KPI16. Because these flights saturate Sector 180.0 simultaneously, ATC is forced into heavy intervention. Consequently, flights from Florianópolis (SBFL) sharing the same entry sector are often deprioritized, creating a cascading effect that explains its position as the airport with the highest overall average fuel penalty.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/hora_adep.png}
+    \caption{Mean KPI16 for the three most active ADEPs during the top six busiest landing hours.}
+    \label{fig:hora-adep}
+\end{figure}
