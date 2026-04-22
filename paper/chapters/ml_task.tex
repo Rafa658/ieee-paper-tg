@@ -1,0 +1,72 @@
+\section{MACHINE LEARNING APPROACH}
+\label{sec:ml_task}
+
+To evaluate the predictability of the additional fuel consumption ($kpi16$) given the operational, spatial, and meteorological conditions prior to or at the exact moment the aircraft enters the Terminal Control Area (TMA), we formulated the problem as a supervised machine learning regression task. 
+
+A rigorous pipeline was established to prevent data leakage: features that could only be observed after the flight's landing (e.g., total transit time, actual fuel consumed) were strictly excluded from the predictive models. The final set of explanatory variables included both numerical features (e.g., number of concurrent aircraft in the TMA, predicted transit time based on a rolling window, visibility, and cloud ceiling) and categorical features (e.g., origin airport, aircraft type, entry sector, validated runway, month, hour, and day of the week).
+
+Missing values in the cloud ceiling variable were imputed with a constant high value (10,000 ft) assuming clear sky conditions, while other numerical variables were imputed using their respective medians. For the baseline linear model, categorical features were encoded using One-Hot Encoding and numerical features were normalized using Standard Scaling. For a fair and direct comparison, this exact same pre-processed dataset (comprising 51,295 records for training and 12,824 for testing) was utilized across all evaluated algorithms.
+
+We benchmarked six distinct machine learning algorithms to map the complex, non-linear relationships of airspace congestion to fuel consumption.
+
+\subsection{Linear Regression (Baseline)}
+To establish a performance baseline, an Ordinary Least Squares (OLS) Linear Regression was trained. While highly interpretable and computationally efficient, linear regression assumes a linear relationship between the predictors and the target variable. In highly complex environments like air traffic management, this model typically underfits the data but serves as a fundamental benchmark.
+
+\subsection{Random Forest Regressor}
+Random Forest is a robust ensemble learning method that operates by constructing a multitude of decision trees during training and outputting the average prediction of the individual trees. It uses a bagging (bootstrap aggregating) technique to reduce variance and avoid overfitting. We configured the model with 100 estimators and a maximum depth of 15 to balance model complexity and generalization capacity.
+
+\subsection{Gradient Boosting Regressor}
+Gradient Boosting is a sequential ensemble technique where each new decision tree is trained to correct the residual errors made by the previous trees. It is highly effective for tabular data with heterogeneous features. The Scikit-Learn implementation of the Gradient Boosting Regressor was trained using 100 estimators, a learning rate of 0.1, and a maximum tree depth of 5.
+
+\subsection{XGBoost}
+Extreme Gradient Boosting (XGBoost) is an optimized, distributed gradient boosting library designed to be highly efficient, flexible, and portable. It incorporates advanced regularization (L1 and L2) to prevent overfitting. For our tabular dataset, we utilized the histogram-based tree method (\texttt{tree\_method='hist'}), which significantly speeds up the training process. The model was parametrized identically to the standard Gradient Boosting (100 estimators, learning rate of 0.1, maximum depth of 5).
+
+\subsection{LightGBM}
+Light Gradient Boosting Machine (LightGBM), developed by Microsoft, is a gradient boosting framework that uses tree-based learning algorithms. It is designed for distributed and efficient training, notably using a leaf-wise (rather than level-wise) tree growth strategy. This allows for faster convergence and lower memory usage. We trained the LightGBM model with 100 estimators, a learning rate of 0.1, and a maximum depth of 5.
+
+\subsection{CatBoost}
+Categorical Boosting (CatBoost), developed by Yandex, is an algorithm that natively handles categorical variables without the need for extensive pre-processing (like One-Hot Encoding). It uses oblivious decision trees, which decreases scoring time and avoids overfitting. Although CatBoost is capable of processing raw categorical data, we trained it on our pre-processed dataset for a strict one-to-one benchmark. The model was configured with 100 iterations, a learning rate of 0.1, and a depth of 5.
+
+\section{EXPERIMENTAL RESULTS AND DISCUSSION}
+
+The performance of the predictive models was evaluated using the Root Mean Squared Error (RMSE), the Mean Absolute Error (MAE), and the Coefficient of Determination ($R^2$). The $R^2$ score represents the proportion of the variance in the dependent variable that is predictable from the independent variables, whereas RMSE and MAE measure the average magnitude of the errors in kilograms of fuel.
+
+The consolidated results of the models evaluated on the test set are presented in Table \ref{tab:models_summary}.
+
+\begin{table}[htbp]
+\caption{Comparison of Machine Learning Models}
+\label{tab:models_summary}
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Model} & \textbf{RMSE} & \textbf{MAE} & \textbf{$R^2$} \\
+\hline
+Gradient Boosting & 35.19 & 22.71 & 0.5887 \\
+XGBoost & 35.31 & 22.70 & 0.5858 \\
+LightGBM & 35.34 & 22.72 & 0.5852 \\
+Random Forest & 35.44 & 22.87 & 0.5829 \\
+CatBoost & 36.07 & 23.28 & 0.5679 \\
+Linear Regression & 38.23 & 24.60 & 0.5147 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/comparativo_rmse.png}
+    \caption{Root Mean Squared Error (RMSE) comparison across the evaluated machine learning models.}
+    \label{fig:comparativo_rmse}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/comparativo_r2.png}
+    \caption{Coefficient of Determination ($R^2$) comparison across the evaluated machine learning models.}
+    \label{fig:comparativo_r2}
+\end{figure}
+
+As observed in Figures \ref{fig:comparativo_rmse} and \ref{fig:comparativo_r2}, all tree-based ensemble methods significantly outperformed the Linear Regression baseline, which achieved an $R^2$ of 0.5147 and an RMSE of 38.23 kg. This substantial gap (an improvement of approximately 14\% in $R^2$ variance explained) underscores the highly non-linear nature of air traffic dynamics and the necessity of using advanced algorithms to capture complex interactions between arrival sectors, time of day, and congestion levels.
+
+Among the ensemble methods, the performances were remarkably competitive. The standard Gradient Boosting Regressor (Scikit-Learn implementation) yielded the best overall results, reaching an $R^2$ of 0.5887 and an RMSE of 35.19 kg. It was closely followed by XGBoost and LightGBM. The slightly inferior performance of CatBoost in this specific setup ($R^2$ = 0.5679) can likely be attributed to the fact that we fed it a pre-encoded (One-Hot) dataset to maintain consistency across the benchmark, whereas CatBoost is specifically optimized to internally process native ordinal categorical data.
+
+Overall, explaining nearly 59\% of the variance in additional fuel consumption ($KPI16$) is a highly promising result for an operational air traffic model. Predicting tactical fuel penalties prior to TMA entry enables controllers to anticipate bottlenecks and allows airlines to optimize their fuel policies dynamically.
