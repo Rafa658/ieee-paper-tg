@@ -1,0 +1,45 @@
+\section{HYPERPARAMETER TUNING AND OPTIMIZATION}
+\label{sec:hyperparameter_tuning}
+
+Following the baseline evaluation of the machine learning algorithms, an extensive hyperparameter tuning phase was conducted to maximize the predictive capability of the models. The default parameters, while robust, often fail to capture the nuances of complex non-linear relationships present in aviation datasets. This is especially true regarding the trade-off between the learning rate and the number of estimators, and the tendency of tree-based methods to overfit on dominant features such as the predicted transit time (\textit{transit\_tma\_predicted}).
+
+To systematically explore the hyperparameter space, we employed \textbf{Optuna}, an open-source hyperparameter optimization framework that utilizes Bayesian optimization. Unlike an exhaustive grid search, Optuna's Tree-structured Parzen Estimator (TPE) algorithm probabilistically samples the search space, focusing on regions that are more likely to yield optimal results, thus significantly reducing computational time while finding better local minima.
+
+\subsection{Optimization Strategy}
+
+The tuning process was applied to all applicable tree-based ensemble methods: Random Forest, Gradient Boosting, XGBoost, LightGBM, and CatBoost. For each model, we defined an objective function to minimize the Mean Squared Error (MSE) using a 20\% validation hold-out set. The optimization trials ran iterativelly, focusing on the following key aspects:
+
+\begin{itemize}
+    \item \textbf{Learning Rate and Estimators Trade-off:} We allowed the framework to explore lower learning rates paired with a higher number of estimators. This combination generally improves the model's ability to converge smoothly to a global minimum without overshooting.
+    \item \textbf{Tree Complexity (Depth and Leaves):} The maximum depth of the trees (\textit{max\_depth}) and the maximum number of leaves (\textit{num\_leaves}) were expanded to allow the models to capture deeper, more intricate interactions among the spatial and temporal variables.
+    \item \textbf{Regularization (L1/L2 Penalties):} To prevent the models from memorizing the training data, we introduced L1 (\textit{reg\_alpha}) and L2 (\textit{reg\_lambda} or \textit{l2\_leaf\_reg}) regularization terms. This forces the algorithms to keep the tree weights small and generalized.
+    \item \textbf{Subsampling and Feature Selection:} We optimized the \textit{subsample} (fraction of rows used per tree) and \textit{colsample\_bytree} (fraction of columns used per tree) parameters. By restricting the models to around 60\% to 80\% of the data or features per iteration, we forced the ensembles to learn from diverse perspectives, reducing their over-reliance on the dominant \textit{transit\_tma\_predicted} feature.
+\end{itemize}
+
+\subsection{Tuning Results and Winning Model}
+
+The optimization phase yielded substantial improvements across the gradient boosting algorithms, as detailed in Table \ref{tab:tuning_results}.
+
+\begin{table}[htbp]
+\caption{Model Performance ($R^2$) Before and After Hyperparameter Tuning}
+\label{tab:tuning_results}
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Model} & \textbf{Baseline $R^2$} & \textbf{Tuned $R^2$} & \textbf{Improvement} \\
+\hline
+Linear Regression & 0.5147 & N/A & N/A \\
+Random Forest & 0.5829 & 0.5852 & +0.23\% \\
+Gradient Boosting & 0.5887 & 0.6212 & +3.25\% \\
+LightGBM & 0.5852 & 0.6236 & +3.84\% \\
+XGBoost & 0.5858 & 0.6248 & +3.90\% \\
+\textbf{CatBoost} & \textbf{0.5679} & \textbf{0.6259} & \textbf{+5.80\%} \\
+\hline
+\end{tabular}
+\end{table}
+
+While the Random Forest algorithm saw only a marginal gain—a behavior that is common in bagging methods which are less sensitive to hyperparameter changes—all gradient boosting architectures experienced significant leaps in performance.
+
+The most notable outcome of the tuning process was the performance of \textbf{CatBoost}. In the baseline evaluation, CatBoost placed last among the tree-based methods ($R^2 = 0.5679$), primarily because the dataset had been pre-processed with One-Hot Encoding to ensure a strict one-to-one benchmark against the other models, whereas CatBoost is natively optimized to handle raw categorical data internally. However, after undergoing Bayesian optimization with Optuna, CatBoost experienced a massive 5.80\% improvement in explained variance, jumping to the first position with an $R^2$ of \textbf{0.6259} and an RMSE of 33.56 kg. 
+
+These results solidify CatBoost as the winning model of this study. This dramatic leap in performance was heavily driven by the optimization of its specific hyperparameters. First, the number of \textit{iterations} was elevated to 900, coupled with a highly calibrated \textit{learning\_rate} of approximately 0.0596, allowing for steady convergence. The \textit{depth} of the oblivious trees was increased to 9, giving the model the ability to detect deeper conditional patterns without excessive branching. To prevent this increased depth from overfitting, the \textit{subsample} ratio was reduced to 0.734 (meaning each tree was trained on only ~73\% of the data) and the \textit{l2\_leaf\_reg} (L2 regularization coefficient) was refined. These optimized parameters allowed CatBoost to effectively navigate the complex categorical interactions (such as the relationship between specific departure airports and entry sectors) and deliver the most accurate estimations of additional fuel consumption in the Terminal Maneuvering Area.
