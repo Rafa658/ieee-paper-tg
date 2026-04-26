@@ -1,14 +1,14 @@
 \section{EXPERIMENTAL DATA}
-Data was collected from three main sources: flight radar data  for civil flights landing in São Paulo/Guarulhos International Airport (ICAO: SBGR) was provided by Operational Data Integrator (ODIN) from Brazilian Airspace Control Institute (ICEA), flight-condition fuel usage for aircraft was extracted from Base of Aircraft Data (BADA) online API and climate data, including ceiling and visibility, was downloaded from Iowa State University API.
+Data was collected from three main sources: flight radar data  for civil flights landing in São Paulo/Guarulhos International Airport (ICAO: SBGR) was provided by Operational Data Integrator (ODIN) from Brazilian Airspace Control Institute (ICEA), flight-condition fuel usage for aircraft was extracted from Base of Aircraft Data (BADA) online API \cite{bada_a320} and climate data, including ceiling and visibility, was downloaded from Iowa State University API.
 
 \subsection{ODIN FLIGHT RADAR DATA}
 ICEA's ODIN contains operational registries for air traffic all around Brazilian territory, including data from five radar arrays around Brazil: \textit{Amazônico} (located in north), \textit{Brasilia} (center-west), \textit{Recife} (northeast), \textit{Curitiba} (south) and \textit{Atlântico} (oceanic portion). They provide information for latitude, longitude, speed relative to sound, flight level, call sign registration and datetime for registry.
 [TODO: include schematic]
 
-Also, ODIN provides previously calculated KPI08 data, including departure airport, landing airport, call sign, weight class and type for aircraft, landing runway, datetime for entering in Terminal Maneuvering Area (TMA) and KPI08 metric itself.
+Also, ODIN provides previously calculated KPI08 data \cite{mca10022}, including departure airport, landing airport, call sign, weight class and type for aircraft, landing runway, datetime for entering in Terminal Maneuvering Area (TMA) and KPI08 metric itself \cite{doc9750}.
 
 \subsection{BADA EFFICIENCY CHART}
-The aircraft efficiency map was computed using the Base of Aircraft Data (BADA) model, specifically BADA3, which accounts for, among other factors, the aircraft type and flight level in estimating instantaneous fuel consumption. The interface between the model and the study requirements was implemented through the \texttt{pyBADA} support library in Python.
+The aircraft efficiency map was computed using the Base of Aircraft Data (BADA) model \cite{bada_a320}, specifically BADA3, which accounts for, among other factors, the aircraft type and flight level in estimating instantaneous fuel consumption. The interface between the model and the study requirements was implemented through the \texttt{pyBADA} support library in Python \cite{pybada}.
 
 \subsection{IOWA STATE UNIVERSITY CLIMATE DATA}
 Iowa State University provides a public API for airport weather observations from around the world. In this article, studies will be focused on SBGR and will include both visibility and ceiling from observation radar.
