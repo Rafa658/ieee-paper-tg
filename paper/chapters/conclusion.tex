@@ -1,5 +1,7 @@
 \section{CONCLUSION}
-A conclusion section is not required. Although a conclusion may review the 
-main points of the paper, do not replicate the abstract as the conclusion. A 
-conclusion might elaborate on the importance of the work or suggest 
-applications and extensions.
+
+In this paper, we successfully developed and validated a machine learning framework to estimate the additional fuel consumption (KPI16) during the terminal maneuvering area (TMA) operations at Guarulhos International Airport. By integrating real-world radar trajectories, BADA performance parameters, and existing operational metrics (such as KPI08) into a scalable data architecture, we created a robust and reproducible analytical pipeline.
+
+The comparative analysis of gradient boosting algorithms demonstrated that the LightGBM model achieved the most effective balance of predictive performance and generalization, with an $R^2$ of 0.64 and a mean absolute error of 17.85 kg. Furthermore, our feature importance analysis highlighted that the predicted transit time within the TMA was the most significant explanatory variable. This finding underscores the direct impact of air traffic congestion and sequencing inefficiencies on both environmental and operational costs.
+
+The resulting methodology provides a reliable tool for the continuous monitoring of operational efficiency, aligning with international sustainability goals and the performance-based management advocated by ICAO. Future work will focus on expanding the scope of the model to encompass other aircraft families and major airports. Additionally, we plan to incorporate real-time meteorological conditions and air traffic flow management (ATFM) data to further enhance predictive accuracy, and to deploy the model within institutional dashboards for automated, near real-time KPI monitoring.
