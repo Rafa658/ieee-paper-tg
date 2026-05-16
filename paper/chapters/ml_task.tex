@@ -10,13 +10,13 @@ Missing values in the cloud ceiling variable were imputed with a constant high v
 We benchmarked six distinct machine learning algorithms to map the complex, non-linear relationships of airspace congestion to fuel consumption.
 
 \subsection{Linear Regression (Baseline)}
-To establish a performance baseline, an Ordinary Least Squares (OLS) Linear Regression was trained. While highly interpretable and computationally efficient, linear regression assumes a linear relationship between the predictors and the target variable. In highly complex environments like air traffic management, this model typically underfits the data but serves as a fundamental benchmark.
+To establish a performance baseline, an Ordinary Least Squares (OLS) Linear Regression \cite{hastie2009elements} was trained. While highly interpretable and computationally efficient, linear regression assumes a linear relationship between the predictors and the target variable. In highly complex environments like air traffic management, this model typically underfits the data but serves as a fundamental benchmark.
 
 \subsection{Random Forest Regressor}
-Random Forest is a robust ensemble learning method that operates by constructing a multitude of decision trees during training and outputting the average prediction of the individual trees. It uses a bagging (bootstrap aggregating) technique to reduce variance and avoid overfitting. We configured the model with 100 estimators and a maximum depth of 15 to balance model complexity and generalization capacity.
+Random Forest \cite{breiman2001random} is a robust ensemble learning method that operates by constructing a multitude of decision trees during training and outputting the average prediction of the individual trees. It uses a bagging (bootstrap aggregating) technique to reduce variance and avoid overfitting. We configured the model with 100 estimators and a maximum depth of 15 to balance model complexity and generalization capacity.
 
 \subsection{Gradient Boosting Regressor}
-Gradient Boosting is a sequential ensemble technique where each new decision tree is trained to correct the residual errors made by the previous trees. It is highly effective for tabular data with heterogeneous features. The Scikit-Learn implementation of the Gradient Boosting Regressor was trained using 100 estimators, a learning rate of 0.1, and a maximum tree depth of 5.
+Gradient Boosting \cite{friedman2001greedy} is a sequential ensemble technique where each new decision tree is trained to correct the residual errors made by the previous trees. It is highly effective for tabular data with heterogeneous features. The Scikit-Learn implementation of the Gradient Boosting Regressor was trained using 100 estimators, a learning rate of 0.1, and a maximum tree depth of 5.
 
 \subsection{XGBoost}
 Extreme Gradient Boosting (XGBoost) \cite{chen2016xgboost} is an optimized, distributed gradient boosting library designed to be highly efficient, flexible, and portable. It incorporates advanced regularization (L1 and L2) to prevent overfitting. For our tabular dataset, we utilized the histogram-based tree method (\texttt{tree\_method='hist'}), which significantly speeds up the training process. The model was parametrized identically to the standard Gradient Boosting (100 estimators, learning rate of 0.1, maximum depth of 5).
