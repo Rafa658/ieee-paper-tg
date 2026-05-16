@@ -7,7 +7,14 @@ Furthermore, the systematic analysis of KPIs facilitates communication among air
 In this study, two specific performance indicators established by ICAO are of primary interest: KPI08: Additional Time in TMA, and KPI16: Additional Fuel Burn. Both metrics combined are essential to evaluate aircraft performance at Terminal Maneuvering Area (TMA) in termos of time, fuel consumption and emissions.
 
 \subsection{KPI08: Additional Time in TMA}
-KPI08 measures the additional transit time spent by an aircraft within the TMA compared to an unimpeded baseline, considered as the optimal transit time. The reference baseline is generally established through the clustering of transit time samples based on the runway in use, the aircraft type, and the entry sector into the terminal area. The unimpeded transit time is then defined as the 20th percentile of all samples within these grouped conditions. 
+KPI08 measures the additional transit time spent by an aircraft within the TMA compared to an unimpeded baseline, considered as the optimal transit time. In this study, the Terminal Area is defined as a cylindrical airspace with a 100-nautical-mile radius centered at Guarulhos (GRU) International Airport. The reference baseline is generally established through the clustering of transit time samples based on the runway in use, the aircraft type, and the entry sector into the terminal area. As illustrated in Figure \ref{fig:gru_sectors}, these entry sectors are divided into angular segments of 60 degrees. The unimpeded transit time is then defined as the 20th percentile of all samples within these grouped conditions. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/gru_sectors.png}
+    \caption{Guarulhos International Airport (GRU) Terminal Maneuvering Area (TMA) and its 60-degree entry sectors.}
+    \label{fig:gru_sectors}
+\end{figure}
 
 Various factors can influence this indicator, including airspace design, meteorological conditions, and tactical interventions by Air Traffic Control (ATC) such as holding patterns and vectoring for sequencing. The comparison of the actual transit time to the 20th percentile baseline effectively isolates the operational inefficiencies, focusing on the ATM's responsibility in optimizing the arrival flow.
 
