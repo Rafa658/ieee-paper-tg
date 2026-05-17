@@ -1,5 +1,7 @@
 code/
 tasks/
+papers/
+catboost_info/
 
 # LaTeX build artifacts
 *.aux
@@ -20,6 +22,6 @@ tasks/
 *.nav
 *.snm
 *.vrb
+*.cls
 
-# Final generated PDF (opcional, remova se quiser comitar o pdf)
 paper/paper.pdf
