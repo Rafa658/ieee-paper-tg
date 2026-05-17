@@ -3,7 +3,7 @@
 
 Following the baseline evaluation of the machine learning algorithms, an extensive hyperparameter tuning phase was conducted to maximize the predictive capability of the models. The default parameters, while robust, often fail to capture the nuances of complex non-linear relationships present in aviation datasets. This is especially true regarding the trade-off between the learning rate and the number of estimators, and the tendency of tree-based methods to overfit on dominant features such as the predicted transit time (\textit{transit\_tma\_predicted}).
 
-To systematically explore the hyperparameter space, we employed Optuna, an open-source hyperparameter optimization framework that utilizes Bayesian optimization. Unlike an exhaustive grid search, Optuna's Tree-structured Parzen Estimator (TPE) algorithm probabilistically samples the search space, focusing on regions that are more likely to yield optimal results, thus significantly reducing computational time while finding better local minima.
+To systematically explore the hyperparameter space, we employed Optuna \cite{akiba2019optuna}, an open-source hyperparameter optimization framework that utilizes Bayesian optimization. Unlike an exhaustive grid search, Optuna's Tree-structured Parzen Estimator (TPE) algorithm probabilistically samples the search space, focusing on regions that are more likely to yield optimal results, thus significantly reducing computational time while finding better local minima.
 
 \subsection{Optimization Strategy}
 
