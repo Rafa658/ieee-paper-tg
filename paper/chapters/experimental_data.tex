@@ -5,10 +5,67 @@ Data was collected from three main sources: surveillance radar data  for civil f
 ICEA's ODIN contains operational registries for air traffic all around Brazilian territory, including data from five radar arrays around Brazil: \textit{Amazônico} (located in north), \textit{Brasilia} (center-west), \textit{Recife} (northeast), \textit{Curitiba} (south) and \textit{Atlântico} (oceanic portion). They provide information for latitude, longitude, speed relative to sound, flight level, call sign registration and datetime for registry.
 [TODO: include schematic]
 
-Also, ODIN provides previously calculated KPI08 data \cite{mca10022}, including departure airport, landing airport, call sign, weight class and type for aircraft, landing runway, datetime for entering in Terminal Maneuvering Area (TMA) and KPI08 metric itself \cite{doc9750}.
+Also, ODIN provides previously calculated KPI08 data \cite{mca10022}, including departure airport, landing airport, call sign, weight class and type for aircraft, landing runway, datetime for entering in Terminal Maneuvering Area (TMA) and KPI08 metric itself \cite{doc9750}. Table \ref{tab:odin_dict} summarizes the specific fields from the ODIN surveillance and KPI08 datasets utilized in this work.
+
+\begin{table}[htbp]
+\caption{Data Dictionary for ODIN Surveillance Radar Data}
+\label{tab:odin_dict}
+\centering
+\begin{tabular}{m{0.28\columnwidth} m{0.16\columnwidth} m{0.44\columnwidth}}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+\texttt{call\_sign} & String & Aircraft call sign registration \\
+\texttt{adep} & String & Departure airport (ICAO code) \\
+\texttt{ades} & String & Landing airport (ICAO code) \\
+\texttt{aircraft\_type} & String & Aircraft model (e.g., A320) \\
+\texttt{weight\_class} & String & Aircraft weight class (e.g., M, H) \\
+\texttt{landing\_runway} & String & Validated landing runway (e.g., 09R) \\
+\texttt{tma\_entry\_time} & Datetime & Datetime for entering the TMA \\
+\texttt{kpi08} & Float & Calculated KPI08 metric (seconds) \\
+\texttt{latitude} & Float & Aircraft latitude position \\
+\texttt{longitude} & Float & Aircraft longitude position \\
+\texttt{flight\_level} & Integer & Current flight level in hundreds of feet (e.g., 100) \\
+\texttt{mach} & Float & Speed relative to sound (Mach) \\
+\texttt{timestamp} & Datetime & Radar registry datetime \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{BADA EFFICIENCY CHART}
-The aircraft efficiency map was computed using the Base of Aircraft Data (BADA) model \cite{bada_a320}, specifically BADA3, which accounts for, among other factors, the aircraft type and flight level in estimating instantaneous fuel consumption. The interface between the model and the study requirements was implemented through the \texttt{pyBADA} support library in Python \cite{pybada}.
+The aircraft efficiency map was computed using the Base of Aircraft Data (BADA) model \cite{bada_a320}, specifically BADA3, which accounts for, among other factors, the aircraft type and flight level in estimating instantaneous fuel consumption. The interface between the model and the study requirements was implemented through the \texttt{pyBADA} support library in Python \cite{pybada}. Table \ref{tab:bada_dict} presents the data dictionary for the BADA performance parameters extracted for our methodology.
+
+\begin{table}[htbp]
+\caption{Data Dictionary for BADA Efficiency Chart}
+\label{tab:bada_dict}
+\centering
+\begin{tabular}{m{0.28\columnwidth} m{0.16\columnwidth} m{0.44\columnwidth}}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+\texttt{aircraft} & String & Aircraft model identifier (e.g., A320) \\
+\texttt{tas\_ms} & Float & True Airspeed in meters per second \\
+\texttt{fl} & Integer & Flight Level in hundreds of feet (e.g., 100) \\
+\texttt{fuel\_flow\_kg\_s} & Float & Instantaneous fuel flow in kg/s \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{IOWA STATE UNIVERSITY CLIMATE DATA}
-Iowa State University provides a public API for daily airport weather observations from around the world. In this article, studies will be focused on SBGR and will include both visibility and ceiling from observation radar.
+Iowa State University provides a public API for daily airport weather observations from around the world. In this article, studies will be focused on SBGR and will include both visibility and ceiling from observation radar. The specific fields retained from this dataset are described in Table \ref{tab:climate_dict}.
+
+\begin{table}[htbp]
+\caption{Data Dictionary for Iowa State University Climate Data}
+\label{tab:climate_dict}
+\centering
+\begin{tabular}{m{0.28\columnwidth} m{0.16\columnwidth} m{0.44\columnwidth}}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+\texttt{valid} & Datetime & Observation timestamp (e.g., 2025-01-01 15:00) \\
+\texttt{station} & String & Weather station ICAO code (e.g., SBSP) \\
+\texttt{vsby} & Float & Visibility measurement (in miles) \\
+\texttt{ceiling\_ft} & Float & Cloud ceiling height (in feet) \\
+\hline
+\end{tabular}
+\end{table}
