@@ -12,7 +12,7 @@ The variables can be classified into five main categories based on their purpose
     \item \textbf{Fuel consumption:} Total consumption in TMA ($consumption\_kg$), 20th percentile reference consumption ($consumption\_20p$), and additional consumption ($kpi16$).
 \end{itemize}
 
-The target variable of this study, $kpi16$, represents the additional fuel consumption relative to an efficiency baseline (20th percentile of similar flights). Positive $kpi16$ values indicate consumption above the expected level, while negative values point to operations more efficient than the baseline. The distribution of $kpi16$ presents elongated tails, as shown in Figure \ref{fig:kpi16-distribution}, indicating the presence of observations with significantly high additional consumption. Such cases may be associated with adverse operational conditions, such as airspace congestion, unfavorable weather, or prolonged holding procedures. Outlier analysis was handled conservatively, maintaining observations between the 1st and 99th percentiles to preserve extreme events that represent actual operational behavior within the system.
+The distribution of $kpi16$ presents elongated tails, as shown in Figure \ref{fig:kpi16-distribution}, indicating the presence of observations with significantly high additional consumption. Such cases may be associated with adverse operational conditions, such as airspace congestion, unfavorable weather, or prolonged holding procedures. Outlier analysis was handled conservatively, maintaining observations between the 1st and 99th percentiles to preserve extreme events that represent actual operational behavior within the system.
 
 \begin{figure}[htbp]
     \centering
