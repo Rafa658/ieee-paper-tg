@@ -23,5 +23,6 @@ catboost_info/
 *.snm
 *.vrb
 *.cls
+.DS_Store
 
 paper/paper.pdf
