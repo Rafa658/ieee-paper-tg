@@ -31,3 +31,14 @@ The data transformations were structured across multiple SQL models to progressi
 \end{itemize}
 
 These transformations—ranging from chronological event tracking to percentile-based baselining—were carefully designed to expose underlying trends, airspace bottlenecks, and correlations within the flight data, paving the way for sophisticated machine learning investigations. Furthermore, adopting structured data modeling approaches (e.g., Medallion architecture) ensures scalability when applying these pipelines to massive Apache Spark or distributed SQL environments \cite{databricks_medallion, saha_dataeng}.
+
+\subsection{DATA DESCRIPTION FOR FINAL DATASET}
+
+After the data transformation process, the variables can be classified into five main categories based on their purpose:
+\begin{itemize}
+    \item \textbf{Identification and temporal:} Unique flight identifier ($id$), date ($date$), day of the month ($day$), month ($month$), hour ($hour$), and day of the week ($dow$).
+    \item \textbf{Operational:} Departure airport ($adep$), aircraft type ($aircraft$), validated landing runway ($drwy\_validado$), and TMA entry sector ($setor$).
+    \item \textbf{Traffic and flight time:} Total transit time in TMA ($transit\_tma$), additional transit time ($kpi08$), number of aircraft in TMA ($nr\_aircraft\_in\_tma$), and predicted average transit time ($transit\_tma\_predicted$).
+    \item \textbf{Meteorological:} Horizontal visibility ($visibility$) and cloud ceiling ($ceiling$).
+    \item \textbf{Fuel consumption:} Total consumption in TMA ($consumption\_kg$), 20th percentile reference consumption ($consumption\_20p$), and additional consumption ($kpi16$).
+\end{itemize}
