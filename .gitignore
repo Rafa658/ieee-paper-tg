@@ -26,3 +26,8 @@ catboost_info/
 .DS_Store
 
 paper/paper.pdf
+
+# AI Markdown files
+CLAUDE.md
+AGENT.md
+AGENTS.md
