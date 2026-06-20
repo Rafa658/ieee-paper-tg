@@ -4,7 +4,7 @@ all: paper
 
 paper:
 	@echo "Compilando o paper.pdf..."
-	@cd paper && latexmk -pdf -shell-escape -jobname=paper paper.tex
+	@cd paper && latexmk -f -pdf -shell-escape -jobname=paper paper.tex
 
 clean:
 	@echo "Limpando arquivos auxiliares..."
