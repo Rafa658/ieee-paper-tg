@@ -2,6 +2,7 @@ code/
 tasks/
 papers/
 catboost_info/
+paper/svg-inkscape/
 
 # LaTeX build artifacts
 *.aux
