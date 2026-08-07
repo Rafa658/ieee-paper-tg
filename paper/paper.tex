@@ -1,52 +1,50 @@
-\documentclass{IEEEoj}
-\usepackage{cite}
-\usepackage{amsmath,amssymb,amsfonts}
+\documentclass[lettersize,journal]{IEEEtran}
+\usepackage{amsmath,amsfonts,amssymb}
 \usepackage{algorithmic}
-\usepackage{graphicx,color}
-\usepackage{svg}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{textcomp}
+\usepackage{stfloats}
 \usepackage{url}
-\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
-\AtBeginDocument{\definecolor{ojcolor}{cmyk}{0.93,0.59,0.15,0.02}}
-\def\OJlogo{\vspace{-14pt}\includegraphics[height=28pt]{ojits.png}}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{cite}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+
 \begin{document}
-\receiveddate{July 2026}
-\reviseddate{XX Month, XXXX}
-\accepteddate{XX Month, XXXX}
-\publisheddate{XX Month, XXXX}
-\currentdate{July 2026}
-\doiinfo{OJITS.2022.1234567}
 
 \title{Operational Prediction of Additional Fuel Burn in Terminal Airspace}
 
-\author{RAFAEL SILVA DE OLIVEIRA\authornumrefmark{1}, JOSÉ MARIA PARENTE\authornumrefmark{2}, JEAN PHELIPE DE OLIVEIRA LIMA\authornumrefmark{1}, AND POLLYANNE EVANGELISTA DA SILVA\authornumrefmark{1}}
-\affil{Instituto de Controle do Espaço Aéreo (ICEA), Brazil}
-\affil{Instituto Tecnológico de Aeronáutica (ITA), Brazil}
-\corresp{CORRESPONDING AUTHOR: Rafael Silva de Oliveira (e-mail: rafollo@live.com).}
+\author{R.~S.~de~Oliveira, J.~M.~Parente, J.~P.~de~O.~Lima, and P.~E.~da~Silva%
+\thanks{R.~S.~de~Oliveira and J.~P.~de~O.~Lima are with the Instituto de Controle do Espa\c{c}o A\'ereo (ICEA), Brazil. J.~M.~Parente is with the Instituto Tecnol\'ogico de Aeron\'autica (ITA), Brazil. P.~E.~da~Silva is with the Instituto de Controle do Espa\c{c}o A\'ereo (ICEA), Brazil. Corresponding author: Rafael Silva de Oliveira (e-mail: rafollo@live.com). Manuscript received July 2026.}}
 
 \markboth{Operational Prediction of Additional Fuel Burn in Terminal Airspace}{Oliveira \textit{et al.}}
+
+\maketitle
 
 \input{chapters/abstract}
 \input{chapters/keywords}
 
-%\IEEEspecialpapernotice{(Invited Paper)}
+\section{Introduction}
+\label{sec:intro}
 
-\maketitle
+\IEEEPARstart{T}{he} Terminal Maneuvering Area (TMA) is one of the most critical and complex sectors of modern airspace. Operations within this region are characterized by high traffic density, reduced separation minimums, low altitudes, and limited runway capacity. Due to these constraints, air traffic controllers must frequently intervene to maintain safety and sequence arriving aircraft. However, these tactical interventions often disrupt optimal flight profiles. When an aircraft is unable to perform a Continuous Descent Operation (CDO) and is instead forced to level off, enter holding patterns, or follow extended vectoring, it operates at lower, less aerodynamically efficient altitudes. Consequently, these deviations from the optimal trajectory generate a substantial increase in fuel consumption and greenhouse gas emissions.
 
-\input{chapters/introduction}
+Given the environmental and economic urgency of modern aviation, managing fuel consumption in the TMA is of utmost importance. The International Civil Aviation Organization (ICAO) has established ambitious global environmental goals, including continuous improvements in fuel efficiency and reducing the environmental footprint of aviation—directly supporting the United Nations' 2030 Agenda for Sustainable Development \cite{doc9750}. Inefficiencies in terminal areas significantly undermine these targets, as operations at lower altitudes burn fuel at much higher rates than during the cruise phase. Therefore, identifying, quantifying, and predicting these inefficiencies is crucial for mitigating the aviation industry's environmental impact and reducing operational costs.
+
+To address these challenges and foster a more efficient global air transport network, ICAO advocates for performance-based management. This framework encourages stakeholders to engage in continuous performance benchmarking, guided at a strategic level by the Global Air Navigation Plan (GANP). In Brazil, the Department of Airspace Control (DECEA), supported by the ATM Performance Commission (CP-ATM), aligns with these global directives by defining operational metrics and conducting post-operational analyses of the Brazilian Airspace Control System (SISCEAB) \cite{mca10022}. By measuring specific outcomes, operators and regulators can share strategic goals and implement data-driven improvements.
+
+Within the context of fuel consumption in the TMA, two Key Performance Indicators (KPIs) defined by the ATM community are particularly relevant: KPI08 (Additional Time in TMA) and KPI16 (Additional Fuel Burn). While KPI08 captures the temporal inefficiencies caused by traffic congestion and sequencing, KPI16 directly quantifies the environmental and economic impact by measuring the excess fuel consumed relative to an unimpeded baseline. Because time and fuel are intrinsically linked in aviation, analyzing both metrics provides a comprehensive view of operational performance. The objective of this paper is to present a machine learning framework capable of estimating the additional fuel consumption (KPI16) for commercial aircraft arriving at Guarulhos International Airport. By utilizing radar trajectory data and EUROCONTROL'S Base of Aircraft Data (BADA) performance parameters, we evaluate multiple gradient boosting techniques to provide a robust predictive tool for continuous performance monitoring \cite{baklacioglu2021fuel}.
+
+The remainder of this paper is organized as follows: Section \ref{sec:background} presents essential background concepts. Section \ref{sec:related_works} reviews related literature and existing performance indicators. Section \ref{sec:proposed_approach} describes the proposed methodology, including data collection, preparation, and machine learning approach. Section \ref{sec:experiments_results} presents the experimental results and analysis. Finally, Section \ref{sec:conclusion} concludes the paper and outlines future work.
+
 \input{chapters/background}
 \input{chapters/related_works}
 \input{chapters/proposed_approach}
 \input{chapters/experiments_results}
 \input{chapters/conclusion}
-% \input{chapters/appendix}
-% \input{chapters/acknowledgment}
-% \input{chapters/references}
-% \input{chapters/submission}
-% \input{chapters/publishing_policy}
-% \input{chapters/publication_principles}
-% \input{chapters/references_example}
 
 \bibliographystyle{IEEEtran}
 \bibliography{chapters/references}
